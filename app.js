@@ -57,11 +57,17 @@ app.get('/campgrounds/:id/edit', async (req, res) => {
   res.render('campgrounds/edit', { campground });
 });
 //PUT ROUTE TO UPDATE
-app.put('/campgrounds/:id', async (req, res)=> {
+app.put('/campgrounds/:id', async (req, res) => {
   const { id } = req.params;
   const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground})
   //HAD ISSUES WHEN IT WAS `campgrounds/${campground._id}`
   res.redirect(`${campground._id}`);
+});
+//DELETE ROUTE
+app.delete('/campgrounds/:id', async (req, res) => {
+  const { id } = req.params;
+  await Campground.findByIdAndDelete(id);
+  res.redirect('/campgrounds');
 });
 
 // END OF FILE
