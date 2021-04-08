@@ -2,6 +2,7 @@ const express = require('express');
 const engine = require('ejs-mate')
 const path = require('path');
 const mongoose = require('mongoose');
+const catchAsync = require('./utils/catchAsync')
 const methodOverride = require('method-override');
 const Campground = require('./models/campground');
 
@@ -34,52 +35,48 @@ app.get('/', (req, res) => {
 });
 
 //INDEX
-app.get('/campgrounds', async (req, res) => {
+app.get('/campgrounds', catchAsync(async (req, res) => {
   const campgrounds = await Campground.find({});
   res.render('campgrounds/index', { campgrounds });
-});
+}));
 //NEW FORM
 app.get('/campgrounds/new', (req, res) => {
   res.render('campgrounds/new');
-})
+});
 //POST ROUTE
-app.post('/campgrounds', async (req, res, next) => {
-  try {
+app.post('/campgrounds', catchAsync(async (req, res, next) => {
   const campground = new Campground(req.body.campground);
   await campground.save();
   res.redirect(`campgrounds/${campground._id}`);
-  } catch(e) {
-    next(e);
-  }
-});
+}));
 //SHOW
-app.get('/campgrounds/:id', async (req, res) => {
+app.get('/campgrounds/:id', catchAsync(async (req, res) => {
   const campground = await Campground.findById(req.params.id)
   res.render('campgrounds/show', { campground });
-});
+}));
 //UPDATE FORM
-app.get('/campgrounds/:id/edit', async (req, res) => {
+app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
   const campground = await Campground.findById(req.params.id)
   res.render('campgrounds/edit', { campground });
-});
+}));
 //PUT ROUTE TO UPDATE
-app.put('/campgrounds/:id', async (req, res) => {
+app.put('/campgrounds/:id', catchAsync(async (req, res) => {
   const { id } = req.params;
   const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground})
   //HAD ISSUES WHEN IT WAS `campgrounds/${campground._id}`
   res.redirect(`${campground._id}`);
-});
+}));
 //DELETE ROUTE
-app.delete('/campgrounds/:id', async (req, res) => {
+app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
   const { id } = req.params;
   await Campground.findByIdAndDelete(id);
   res.redirect('/campgrounds');
-});
+}));
 
 //BASIC ERROR HANDLER
 app.use((err, req, res, next) => {
   res.send('OH BOY SOMETHING WENT WRONG')
-})
+});
 //LISTENER
 app.listen(PORT, () => {
   console.log(`LISTENING ON http://localhost:${PORT}`)
