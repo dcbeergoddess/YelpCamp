@@ -43,10 +43,14 @@ app.get('/campgrounds/new', (req, res) => {
   res.render('campgrounds/new');
 })
 //POST ROUTE
-app.post('/campgrounds', async (req, res) => {
+app.post('/campgrounds', async (req, res, next) => {
+  try {
   const campground = new Campground(req.body.campground);
   await campground.save();
   res.redirect(`campgrounds/${campground._id}`);
+  } catch(e) {
+    next(e);
+  }
 });
 //SHOW
 app.get('/campgrounds/:id', async (req, res) => {
@@ -72,10 +76,11 @@ app.delete('/campgrounds/:id', async (req, res) => {
   res.redirect('/campgrounds');
 });
 
-// END OF FILE
-app.get('*', (req, res) => {
-  res.send(`I DO NOT KNOW THAT PATH!!!!`)
-});
+//BASIC ERROR HANDLER
+app.use((err, req, res, next) => {
+  res.send('OH BOY SOMETHING WENT WRONG')
+})
+//LISTENER
 app.listen(PORT, () => {
   console.log(`LISTENING ON http://localhost:${PORT}`)
 }); 
