@@ -47,7 +47,18 @@ app.get('/campgrounds/new', (req, res) => {
 });
 //POST ROUTE
 app.post('/campgrounds', catchAsync(async (req, res, next) => {
-  if(!req.body.campground) throw new ExpressError('Invalid Campground Data', 400);
+  // if(!req.body.campground) throw new ExpressError('Invalid Campground Data', 400);
+  const campgroundSchema = Joi.object({
+    //campground is our `key` (everything is campground[title], etc)
+    //it should be an object and it needs to be required
+    campground: Joi.object({
+      title: Joi.string().required(),
+      price: Joi.number().required().min(0),
+    }).required()
+  })
+  //save result to variable and print that out to see what happens
+  const result = campgroundSchema.validate(req.body);
+  console.log(result);
   const campground = new Campground(req.body.campground);
   await campground.save();
   res.redirect(`campgrounds/${campground._id}`);
