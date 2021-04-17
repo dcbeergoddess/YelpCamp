@@ -33,7 +33,8 @@ app.set('view engine', 'ejs');
 //MONGOOSE MIDDLEWARE
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
-
+//PUBLIC MIDDLEWARE
+app.use(express.static('public'));
 
 //ROUTER MIDDLEWARE
 app.use('/campgrounds', campgrounds);
