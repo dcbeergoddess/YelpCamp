@@ -59,6 +59,7 @@ app.use(flash());
 app.use((req, res, next) => {
   //Every Request has access now
   res.locals.success = req.flash('success');
+  res.locals.success = req.flash('error');
   next();
 });
 
