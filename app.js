@@ -71,7 +71,7 @@ passport.deserializeUser(User.deserializeUser()); //Take out of session
 app.use((req, res, next) => {
   //Every Request has access now
   //if you are not coming from these two routes..., if req.originalUrl does not include one of these then..
-  if(!['/login', '/'].includes(req.originalUrl)) {
+  if(!['/login', '/register', '/'].includes(req.originalUrl)) {
     req.session.returnTo = req.originalUrl 
   }
   console.log("req.session....", req.session);
