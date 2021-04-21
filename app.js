@@ -74,6 +74,13 @@ app.use((req, res, next) => {
   next();
 });
 
+//NEW USER DEMONSTRATION
+app.get('/fakeUser', async (req, res) => {
+  const user = new User({email: 'rachel@gmail.com', username: 'rrrrachel'});
+  const newUser = await User.register(user, 'jasmine');
+  res.send(newUser);
+});
+
 //ROUTER MIDDLEWARE
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews);
