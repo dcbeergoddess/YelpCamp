@@ -70,6 +70,7 @@ passport.deserializeUser(User.deserializeUser()); //Take out of session
 
 app.use((req, res, next) => {
   //Every Request has access now
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
