@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user');
 
 //RENDER FORM
@@ -8,8 +9,19 @@ router.get('/register', (req, res) => {
 });
 
 //POST FORM
-router.post('/register', async (req, res) => {
-  res.send(req.body); //TEST TO MAKE SURE WE ARE GETTING EVERYTHING WE SENT
-})
+router.post('/register', catchAsync(async (req, res) => {
+  try {
+    //destructure what we want from req.body
+    const { email, username, password } = req.body; 
+    const user = new User({email, username});
+    const registeredUser = await User.register(user, password);
+    // console.log(registeredUser);
+    req.flash('success', 'Welcome To Yelp Camp!');
+    res.redirect('/campgrounds');
+  } catch(e) {
+    req.flash('error', e.message);
+    res.redirect('register');
+  };
+}));
 
 module.exports = router;
