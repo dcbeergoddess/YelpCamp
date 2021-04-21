@@ -3,12 +3,12 @@ const router = express.Router();
 const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user');
 
-//RENDER FORM
+//RENDER REGISTER FORM
 router.get('/register', (req, res) => {
   res.render('users/register')
 });
 
-//POST FORM
+//POST REGISTER FORM
 router.post('/register', catchAsync(async (req, res) => {
   try {
     //destructure what we want from req.body
@@ -23,5 +23,15 @@ router.post('/register', catchAsync(async (req, res) => {
     res.redirect('register');
   };
 }));
+
+//RENDER LOGIN FORM
+router.get('/login', (req, res) => {
+  res.render('users/login');
+});
+
+//POST LOGIN
+router.post('/login', async (req, res) => {
+
+})
 
 module.exports = router;
