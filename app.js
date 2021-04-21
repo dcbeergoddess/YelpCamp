@@ -6,9 +6,11 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
+//passport
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 //models
-const Campground = require('./models/campground');
-const Review = require('./models/review');
+const User = require('./models/user')
 //routers
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
@@ -53,8 +55,17 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 };
+//SESSION
 app.use(session(sessionConfig));
 app.use(flash());
+//PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate())); 
+//Can have multiple strategies going at once
+
+passport.serializeUser(User.serializeUser()); //start session
+passport.deserializeUser(User.deserializeUser()); //Take out of session
 
 app.use((req, res, next) => {
   //Every Request has access now
