@@ -37,7 +37,7 @@ router.get('/:id', catchAsync(async (req, res) => {
     return res.redirect('/campgrounds');
   }
   //TEST THAT IT'S WORKING WITH CAMPGROUND
-  console.log(campground);
+  // console.log(campground);
   res.render('campgrounds/show', { campground });
 }));
 //UPDATE FORM
