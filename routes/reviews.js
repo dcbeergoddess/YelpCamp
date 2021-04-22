@@ -13,6 +13,8 @@ const catchAsync = require('../utils/catchAsync');
 router.post('/', isLoggedIn, validateReview, catchAsync(async (req, res) => {
   const campground = await Campground.findById(req.params.id);
   const review = new Review(req.body.review);
+  //After we make review we set:
+  review.author = req.user._id;
   campground.reviews.push(review);
   //THERE IS A WAY TO DO NEXT TWO LINES TOGETHER
   await review.save();
