@@ -19,8 +19,15 @@
         </div>
       </div>
       <div class="mb-3">
-        <label class="form-label" for="image">Add Images</label>
-        <input type="file" name="campground[image]" id="campground[image]" multiple>
+        <div class="mb-3">
+          <label for="campground[image]" class="form-label">Multiple files input example</label>
+          <input class="form-control" type="file" id="campground[image]" name="campground[image]" multiple>
+        </div>
+        <!-- <label class="form-label" for="image">Add Images</label> -->
+        <!-- <div class="input-group mb-3">
+          <input type="file" class="form-control" id="campground[image]" name="campground[image]" multiple>
+          <label class="input-group-text" for="campground[image]">Upload Images</label>
+      </div> -->
       </div>
       <div class="mb-3">
         <label class="form-label" for="price">Campground Price</label>
