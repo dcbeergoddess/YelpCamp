@@ -9,7 +9,7 @@ const upload = multer({ storage });
 
 router.route('/')
   .get(catchAsync(campgrounds.index))
-  .post(isLoggedIn, validateCampground, upload.array('campground[image]'), catchAsync(campgrounds.createCampground));
+  .post(isLoggedIn, upload.array('campground[image]'), validateCampground, catchAsync(campgrounds.createCampground));
 
 //NEW FORM --> needs to be before /:id
 router.get('/new', isLoggedIn, campgrounds.renderNewForm);
