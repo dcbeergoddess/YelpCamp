@@ -13,7 +13,8 @@ router.route('/')
   .get(catchAsync(campgrounds.index))
   // .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground));
   .post(upload.single('campground[image]'), (req, res) => {
-    res.send(req.body, req.file);
+    console.log(req.body, req.file);
+    res.send("IT WORKED!!")
   });
 
 //NEW FORM --> needs to be before /:id
