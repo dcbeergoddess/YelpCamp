@@ -50,7 +50,11 @@ module.exports.renderEditForm = async (req, res) => {
 //PUT ROUTE TO UPDATE
 module.exports.updateCampground = async (req, res) => {
   const { id } = req.params;
-  const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground}); //this is janky but check to make sure it works
+  const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
+  const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+  //spread array into push --> take data from array and pass into push
+  campground.images.push(...imgs);
+  await campground.save();
   req.flash('success', 'Successfully updated campground!')
   //HAD ISSUES WHEN IT WAS `campgrounds/${campground._id}`
   res.redirect(`${campground._id}`);
