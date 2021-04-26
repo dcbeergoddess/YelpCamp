@@ -3,11 +3,9 @@ const router = express.Router();
 const campgrounds = require('../controllers/campgrounds');
 const catchAsync = require('../utils/catchAsync');
 const { isLoggedIn, isAuthor, validateCampground } = require('../middleware');
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
-//INITIALIZE IT (aka EXECUTE THE FUNCTION) --> Pass in a configuration object --> specify a folder path/destinations for the files
-// WOULD NOT STORE LOCALLY IN REAL WORLD THIS IS JUST A DEMO --> Normally specify cloud service, AWS, etc.
-// TESTING PURPOSES --> DiskStorage or MemoryStorage in DOCS
+const multer  = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 
 router.route('/')
   .get(catchAsync(campgrounds.index))
