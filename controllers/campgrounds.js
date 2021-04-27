@@ -56,6 +56,11 @@ module.exports.updateCampground = async (req, res) => {
   //spread array into push --> take data from array and pass into push
   campground.images.push(...imgs);
   await campground.save();
+  if(req.body.deleteImages) {
+    //COMPLICATED QUERY --> want to pull images where filename is in the req.body.deleteImages
+    await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages }}}})
+    console.log(campground)
+  };
   req.flash('success', 'Successfully updated campground!')
   //HAD ISSUES WHEN IT WAS `campgrounds/${campground._id}`
   res.redirect(`${campground._id}`);
