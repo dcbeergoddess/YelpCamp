@@ -1,4 +1,5 @@
 const Campground = require('../models/campground');
+const { cloudinary } = require('../cloudinary');
 //INDEX
 module.exports.index = async (req, res) => {
   const campgrounds = await Campground.find({});
@@ -50,16 +51,17 @@ module.exports.renderEditForm = async (req, res) => {
 //PUT ROUTE TO UPDATE
 module.exports.updateCampground = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
   const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
   //spread array into push --> take data from array and pass into push
   campground.images.push(...imgs);
   await campground.save();
   if(req.body.deleteImages) {
+    for(let filename of req.body.deleteImages){
+      await cloudinary.uploader.destroy(filename)
+    };
     //COMPLICATED QUERY --> want to pull images where filename is in the req.body.deleteImages
     await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages }}}})
-    console.log(campground)
   };
   req.flash('success', 'Successfully updated campground!')
   //HAD ISSUES WHEN IT WAS `campgrounds/${campground._id}`
