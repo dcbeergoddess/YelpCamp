@@ -47,6 +47,10 @@
         <!-- we want an index -- so forEach -->
         <% campground.images.forEach((img, i) => { %>
           <img src="<%= img.url %>" class="img-thumbnail" alt="">
+          <div class="form-check-inline">
+            <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+          </div>
+          <label for="image-<%=i%>">Delete?</label>
         <% }) %>
       </div>
       <div class="mb-3">
