@@ -2,16 +2,21 @@ const mongoose = require('mongoose');
 const Review = require('./review');
 const Schema = mongoose.Schema; 
 
+//NEW IMAGE SCHEMA
+const ImageSchema = new Schema({
+  url: String,
+  filename: String
+});
 
+//use virtual because we do not need to store this information. We still need to request image url from database -- no need to store two
+//every time we call thumbnail we are going to do this little calculation --> very lightweight
+ImageSchema.virtual('thumbnail').get(function() {
+  return this.url.replace('/upload', '/upload/w_200');
+});
 //CREATE SCHEMA
 const CampgroundSchema = new Schema ({
   title: String,
-  images: [
-    {
-      url: String,
-      filename: String
-    }
-  ],
+  images: [ImageSchema],
   price: Number,
   description: String,
   location: String,
