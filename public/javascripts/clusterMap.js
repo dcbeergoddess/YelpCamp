@@ -7,7 +7,6 @@ const map = new mapboxgl.Map({
 });
 
 map.on('load', function () {
-  console.log('MAP LOADED!!!!');
   // Add a new source from our GeoJSON data and
   // set the 'cluster' option to true. GL-JS will
   // add the point_count property to your source data.
@@ -83,7 +82,6 @@ map.on('load', function () {
   // the location of the feature, with
   // description HTML from its properties.
   map.on('click', 'unclustered-point', function (e) {
-    console.log('UNCLUSTERED POINT CLICKED!!!!');
     const coordinates = e.features[0].geometry.coordinates.slice();
     const mag = e.features[0].properties.mag;
     let tsunami;
@@ -108,7 +106,6 @@ map.on('load', function () {
   });
 
   map.on('mouseenter', 'clusters', function () {
-    console.log('MOUSING OVER A CLUSTER!!!');
     map.getCanvas().style.cursor = 'pointer';
   });
   map.on('mouseleave', 'clusters', function () {
