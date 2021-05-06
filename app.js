@@ -14,9 +14,11 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 //models
-const User = require('./models/user')
+const User = require('./models/user');
+//mongo sanitize
+const mongoSanitize = require('express-mongo-sanitize');
 //routers
-const userRoutes = require('./routes/users')
+const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
@@ -45,6 +47,9 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 //PUBLIC MIDDLEWARE
 app.use(express.static(path.join(__dirname, 'public')));
+//MONGO SANITIZE
+app.use(mongoSanitize());
+
 //SESSION MIDDLEWARE
 const sessionConfig = {
   secret: 'thisshouldbeabettersecret!',
@@ -78,7 +83,7 @@ app.use((req, res, next) => {
   if(!['/login', '/register', '/'].includes(req.originalUrl)) {
     req.session.returnTo = req.originalUrl 
   }
-  // console.log("req.session....", req.session);
+  console.log(req.query)
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
