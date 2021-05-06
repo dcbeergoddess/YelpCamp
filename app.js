@@ -15,6 +15,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 //models
 const User = require('./models/user');
+//SECURITY
+const helmet = require('helmet');
 //mongo sanitize
 const mongoSanitize = require('express-mongo-sanitize');
 //routers
@@ -68,6 +70,7 @@ const sessionConfig = {
 //SESSION
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(helmet({contentSecurityPolicy: false}));
 //PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());
