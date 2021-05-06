@@ -13,6 +13,10 @@ const ImageSchema = new Schema({
 ImageSchema.virtual('thumbnail').get(function() {
   return this.url.replace('/upload', '/upload/w_200');
 });
+
+//INCLUDE VIRTUALS
+const opts = { toJSON: { virtuals: true } };
+
 //CREATE SCHEMA
 const CampgroundSchema = new Schema ({
   title: String,
@@ -41,12 +45,7 @@ const CampgroundSchema = new Schema ({
       ref: 'Review'
     }
   ]
-  /*
-  properties: {
-    popUpMarkup: "<h3>...</h3>"
-  }
-  */
-});
+}, opts);
 
 
 //FOR MAPBOX POPUP --> NESTED
