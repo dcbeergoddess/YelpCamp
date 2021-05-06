@@ -22,7 +22,7 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 const seedDB = async () => {
     await Campground.deleteMany({});
     //CREATE LOOP FOR DATA - 50 times - 50 cities
-    for(let i = 0; i < 50; i++){
+    for(let i = 0; i < 300; i++){
         //random number to pick city[from 1000 city array]
         const random1000 = Math.floor(Math.random() * 1000);
         //random number for price
