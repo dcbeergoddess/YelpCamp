@@ -41,6 +41,17 @@ const CampgroundSchema = new Schema ({
       ref: 'Review'
     }
   ]
+  /*
+  properties: {
+    popUpMarkup: "<h3>...</h3>"
+  }
+  */
+});
+
+
+//FOR MAPBOX POPUP --> NESTED
+CampgroundSchema.virtual('properties.popUpMarkup').get(function() {
+  return "I Am Popup Text";
 });
 
 //DELETE MIDDLEWARE
