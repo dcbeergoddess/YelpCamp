@@ -50,7 +50,7 @@ const CampgroundSchema = new Schema ({
 
 //FOR MAPBOX POPUP --> NESTED
 CampgroundSchema.virtual('properties.popUpMarkup').get(function() {
-  return "I Am Popup Text";
+  return `<a href="/campgrounds/${this._id}">${this.title}</a>`;
 });
 
 //DELETE MIDDLEWARE
