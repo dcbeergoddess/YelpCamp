@@ -5,6 +5,8 @@ const map = new mapboxgl.Map({
   center: campground.geometry.coordinates, // starting position [lng, lat]
   zoom: 10 // starting zoom
 });
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
 //ADD PIN TO MAP
 new mapboxgl.Marker({ color: 'black', rotation: 45 })
   .setLngLat(campground.geometry.coordinates)

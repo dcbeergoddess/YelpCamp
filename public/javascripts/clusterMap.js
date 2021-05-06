@@ -7,7 +7,7 @@ const map = new mapboxgl.Map({
 });
 
 // Add zoom and rotation controls to the map.
-map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
 
 map.on('load', function () {
   // Add a new source from our GeoJSON data and
