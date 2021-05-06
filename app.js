@@ -58,11 +58,8 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    //BASIC SECURITY
     httpOnly: true, 
-    //have cookie expire after week
-    //Date.now() --> produces date in milliseconds
-    // Date.now() + milliseconds * seconds * minutes * hours * days
+    // secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
