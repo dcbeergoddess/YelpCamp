@@ -54,6 +54,7 @@ app.use(mongoSanitize({
 
 //SESSION MIDDLEWARE
 const sessionConfig = {
+  name: 'session',
   secret: 'thisshouldbeabettersecret!',
   resave: false,
   saveUninitialized: true,
