@@ -6,6 +6,8 @@ const map = new mapboxgl.Map({
   zoom: 3,
 });
 
+console.log(campgrounds)
+
 map.on('load', function () {
   // Add a new source from our GeoJSON data and
   // set the 'cluster' option to true. GL-JS will
@@ -82,6 +84,7 @@ map.on('load', function () {
   // the location of the feature, with
   // description HTML from its properties.
   map.on('click', 'unclustered-point', function (e) {
+    console.log(e.features[0])
     const coordinates = e.features[0].geometry.coordinates.slice();
     const mag = e.features[0].properties.mag;
     let tsunami;
