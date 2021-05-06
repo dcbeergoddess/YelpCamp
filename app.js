@@ -48,7 +48,9 @@ app.use(methodOverride('_method'));
 //PUBLIC MIDDLEWARE
 app.use(express.static(path.join(__dirname, 'public')));
 //MONGO SANITIZE
-app.use(mongoSanitize());
+app.use(mongoSanitize({
+  replaceWith: '_'
+}));
 
 //SESSION MIDDLEWARE
 const sessionConfig = {
